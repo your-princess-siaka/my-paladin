@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fff7f5;
+    --ink: #4a2f3a;
+    --soft: #8a6a76;
+    --rose: #e58aa0;
+    --blush: #fbe3e8;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Nunito", system-ui, sans-serif;
+    line-height: 1.7;
+  }
+  h1, h2 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; }
+  section { max-width: 880px; margin: 0 auto; padding: 56px 20px; }
+
+  /* Hero */
+  .hero { text-align: center; padding-top: 72px; }
+  .hero h1 { font-size: clamp(2rem, 6vw, 3.4rem); margin: 0 0 8px; }
+  .hero p.sub { color: var(--soft); font-size: 1.1rem; margin: 0 0 40px; }
+
+  .pair { display: flex; align-items: center; justify-content: center; gap: 0; }
+  .frame {
+    width: min(38vw, 260px);
+    aspect-ratio: 3 / 4;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fbd5de, #f7e6d9);
+    box-shadow: 0 12px 30px rgba(229, 138, 160, .25);
+    border: 6px solid #fff;
+    position: relative;
+  }
+  .frame:first-child { transform: rotate(-3deg); }
+  .frame:last-child { transform: rotate(3deg); }
+  .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .frame .name {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 18px 10px 10px;
+    background: linear-gradient(transparent, rgba(74, 47, 58, .55));
+    color: #fff; font-weight: 600;
+  }
+  .heart {
+    font-size: 2.2rem; color: #b94458;
+    margin: 0 -14px; z-index: 2;
+    animation: beat 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 4px 6px rgba(155, 83, 95, 0.4));
+  }
+  @keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+  .since { margin-top: 32px; color: var(--soft); }
+  .since strong { color: var(--rose); font-size: 1.3rem; }
+
+  /* Letter */
+  .letter {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 40px clamp(20px, 5vw, 56px);
+    box-shadow: 0 8px 24px rgba(74, 47, 58, .06);
+  }
+  .letter h2 { margin-top: 0; text-align: center; }
+  .letter p { font-size: 1.08rem; }
+  .letter .sign { text-align: right; font-family: "Playfair Display", serif; font-style: italic; color: var(--rose); }
+
+  /* Reminders */
+  h2.title { text-align: center; font-size: 2rem; margin-bottom: 8px; }
+  .lead { text-align: center; color: var(--soft); margin: 0 0 28px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .note {
+    background: var(--blush);
+    border-radius: 18px;
+    padding: 22px;
+  }
+  .note span { display: block; font-size: 1.5rem; margin-bottom: 6px; }
+
+  /* Open when */
+  .open-when { display: grid; gap: 12px; }
+  details {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 14px rgba(74, 47, 58, .06);
+  }
+  summary { cursor: pointer; font-weight: 600; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "💌 "; }
+  details[open] summary { color: var(--rose); }
+  details p { margin: 12px 0 0; }
+
+  /* Moments gallery */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+  .gallery figure { margin: 0; }
+  .gallery .ph {
+    aspect-ratio: 1; border-radius: 18px; overflow: hidden;
+    background: linear-gradient(135deg, #fbd5de, #f7e6d9);
+  }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gallery figcaption { text-align: center; color: var(--soft); font-size: .92rem; margin-top: 6px; }
+
+  /* Music */
+  .player { background: var(--card); border-radius: 20px; padding: 18px; box-shadow: 0 4px 14px rgba(74,47,58,.06); }
+  .player audio { width: 100%; margin-bottom: 10px; }
+  .track {
+    display: flex; align-items: center; gap: 12px; width: 100%;
+    padding: 12px 14px; border: 0; border-radius: 12px; background: transparent;
+    font: inherit; color: inherit; text-align: left; cursor: pointer;
+  }
+  .track:hover { background: var(--blush); }
+  .track.active { background: var(--blush); color: var(--rose); font-weight: 600; }
+  .track small { display: block; color: var(--soft); font-weight: 400; }
+
+  footer { text-align: center; color: var(--soft); padding: 40px 20px 60px; }
+</style>
+</head>
+<body>
+
+<!-- ============ EDIT THIS PART ============ -->
+<script>
+  const CONFIG = {
+    title: "My Paladin",
+    subtitle: "A sworn protector of my heart, and the safest place I know.",
+    me:  { name: "Me",  photo: "images/me.jpg" },
+    him: { name: "You", photo: "images/him.jpeg" },
+    // Your start date (YYYY-MM-DD), or leave "" to hide the counter
+    together_since: "2026-08-22",
+
+    letter_title: "A letter for my Paladin",
+    letter: [
+      "Hi Ekiru... my love,",
+      "I made this little corner of the internet just for us. We don't have a photo together yet, but I wanted you to see that even apart, we belong in the same frame.",
+      "On the days you feel tired, doubtful, or not enough: you are. You are more than enough, exactly as you are, today.",
+      "I'm proud of you, I'm on your team, and I'm not going anywhere."
+    ],
+    letter_sign: "Always yours, Siaka",
+
+    reminders: [
+      { icon: "🌹", text: "You are loved on your best days and on your worst days. No difference." },
+      { icon: "🤝", text: "We're a team. Whatever it is, we face it together." },
+      { icon: "🌙", text: "Even when we're far apart, I'm thinking of you." },
+      { icon: "✨", text: "You make ordinary days feel special." },
+      { icon: "🥰", text: "It's okay to rest. I'll still be here when you wake up." },
+      { icon: "🌍", text: "I choose you. Today, tomorrow, and the day after that." }
+    ],
+
+    open_when: [
+      { label: "Open when you're having a hard day",
+        text: "Breathe. You've gotten through every hard day so far, and this one will pass too. I'm so proud of how strong you are. Call me, and I'll listen." },
+      { label: "Open when you miss me",
+        text: "I miss you too. Look at the photo of me above and know that I'm smiling thinking of you. Every moment apart just means a better hello." },
+      { label: "Open when you doubt yourself",
+        text: "You are capable, kind, and doing better than you think. The way you show up for people is something I admire every single day." },
+      { label: "Open when you can't sleep",
+        text: "Put the worries down for tonight. They'll still be there tomorrow, and so will I. Rest well, my love." }
+    ],
+
+    // Add as many separate photos as you like. Leave the array empty to hide this section.
+    moments_title: "Little moments, each of us",
+    moments: [
+      { photo: "images/moment1.jpeg", caption: "Me, thinking of you" },
+      { photo: "images/moment2.jpeg", caption: "You, being you" },
+      { photo: "images/moment3.jpeg", caption: "A favourite day" },
+      { photo: "images/moment4.jpeg", caption: "The face I'm in love with" }
+    ],
+
+    // Our songs. Put the audio files in the "music" folder and match the file names here.
+    // Leave the array empty to hide this section.
+    music_title: "Our songs",
+    music: [
+      { title: "Ain't No Sunshine", artist: "Bill Withers", file: "music/aint-no-sunshine.mp3" },
+      { title: "Just the Two of Us", artist: "Grover Washington Jr.", file: "music/just-the-two-of-us.mp3" },
+      { title: "The Sweetest Taboo", artist: "Sade", file: "music/the-sweetest-taboo.mp3" }
+    ],
+
+    footer: "Made with love, by Siaka 💗"
+  };
+</script>
+<!-- ============ END EDIT ============ -->
+
+<section class="hero">
+  <h1 id="title"></h1>
+  <p class="sub" id="subtitle"></p>
+  <div class="pair">
+    <div class="frame"><img id="meImg" alt=""><div class="name" id="meName"></div></div>
+    <div class="heart">♥</div>
+    <div class="frame"><img id="himImg" alt=""><div class="name" id="himName"></div></div>
+  </div>
+  <p class="since" id="since"></p>
+</section>
+
+<section>
+  <div class="letter">
+    <h2 id="letterTitle"></h2>
+    <div id="letterBody"></div>
+    <p class="sign" id="letterSign"></p>
+  </div>
+</section>
+
+<section>
+  <h2 class="title">Things I want you to remember</h2>
+  <p class="lead">Read these whenever you need them.</p>
+  <div class="grid" id="reminders"></div>
+</section>
+
+<section>
+  <h2 class="title">Open when…</h2>
+  <p class="lead">Tap a card.</p>
+  <div class="open-when" id="openWhen"></div>
+</section>
+
+<section id="momentsSection">
+  <h2 class="title" id="momentsTitle"></h2>
+  <p class="lead">Until we have one together, these will do.</p>
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<section id="musicSection">
+  <h2 class="title" id="musicTitle"></h2>
+  <p class="lead">Press play and let these say what I can't.</p>
+  <div class="player">
+    <audio id="audio" controls preload="none"></audio>
+    <div id="tracks"></div>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  document.title = CONFIG.title;
+  $("title").textContent = CONFIG.title;
+  $("subtitle").textContent = CONFIG.subtitle;
+
+  // Photos: if a file is missing, the soft gradient shows instead of a broken icon
+  function setPhoto(img, src, alt) {
+    img.alt = alt;
+    img.onerror = () => { img.style.display = "none"; };
+    img.src = src;
+  }
+  setPhoto($("meImg"), CONFIG.me.photo, CONFIG.me.name);
+  setPhoto($("himImg"), CONFIG.him.photo, CONFIG.him.name);
+  $("meName").textContent = CONFIG.me.name;
+  $("himName").textContent = CONFIG.him.name;
+
+  if (CONFIG.together_since) {
+    const days = Math.floor((Date.now() - new Date(CONFIG.together_since)) / 86400000);
+    if (days >= 0) $("since").innerHTML = `Together for <strong>${days.toLocaleString()}</strong> days and counting`;
+  }
+
+  $("letterTitle").textContent = CONFIG.letter_title;
+  $("letterBody").innerHTML = CONFIG.letter.map(p => `<p>${esc(p)}</p>`).join("");
+  $("letterSign").textContent = CONFIG.letter_sign;
+
+  $("reminders").innerHTML = CONFIG.reminders
+    .map(r => `<div class="note"><span>${r.icon}</span>${esc(r.text)}</div>`).join("");
+
+  $("openWhen").innerHTML = CONFIG.open_when
+    .map(o => `<details><summary>${esc(o.label)}</summary><p>${esc(o.text)}</p></details>`).join("");
+
+  if (CONFIG.moments.length) {
+    $("momentsTitle").textContent = CONFIG.moments_title;
+    $("gallery").innerHTML = CONFIG.moments.map(m =>
+      `<figure><div class="ph"><img src="${esc(m.photo)}" alt="${esc(m.caption)}" onerror="this.style.display='none'"></div><figcaption>${esc(m.caption)}</figcaption></figure>`
+    ).join("");
+  } else {
+    $("momentsSection").style.display = "none";
+  }
+
+  if (CONFIG.music.length) {
+    $("musicTitle").textContent = CONFIG.music_title;
+    const audio = $("audio");
+    const list = $("tracks");
+    list.innerHTML = CONFIG.music.map((t, i) =>
+      `<button class="track" data-i="${i}">▶ <span>${esc(t.title)}<small>${esc(t.artist)}</small></span></button>`
+    ).join("");
+    const buttons = [...list.querySelectorAll(".track")];
+    function play(i) {
+      audio.src = CONFIG.music[i].file;
+      audio.play().catch(() => {});
+      buttons.forEach((b, j) => b.classList.toggle("active", i === j));
+    }
+    buttons.forEach((b, i) => b.addEventListener("click", () => play(i)));
+    audio.addEventListener("ended", () => {
+      const cur = buttons.findIndex(b => b.classList.contains("active"));
+      if (cur >= 0 && cur < buttons.length - 1) play(cur + 1);
+    });
+    audio.src = CONFIG.music[0].file;
+  } else {
+    $("musicSection").style.display = "none";
+  }
+
+  $("footer").textContent = CONFIG.footer;
+</script>
+</body>
+</html>
