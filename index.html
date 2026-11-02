@@ -3,9 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Us</title>
-<link rel="icon" type="image/jpeg" href="images/icon.png">
+<title>My Paladin</title>
+<meta name="description" content="A little corner of the internet, just for us.">
+<meta name="theme-color" content="#7a0f25">
+<link rel="icon" type="image/png" href="images/icon.png">
 <link rel="apple-touch-icon" href="images/icon.png">
+<!-- Link preview (WhatsApp, iMessage, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="My Paladin">
+<meta property="og:description" content="A little corner of the internet, just for us. Open it when you need it.">
+<meta property="og:image" content="https://your-princess-siaka.github.io/my-paladin/images/icon.png">
+<meta property="og:url" content="https://your-princess-siaka.github.io/my-paladin/">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -54,10 +63,10 @@
     color: #fff; font-weight: 600;
   }
   .heart {
-    font-size: 2.2rem; color: #b94458;
+    font-size: 2.2rem; color: #8b0a1f;
     margin: 0 -14px; z-index: 2;
     animation: beat 1.8s ease-in-out infinite;
-    filter: drop-shadow(0 4px 6px rgba(155, 83, 95, 0.4));
+    filter: drop-shadow(0 4px 6px rgba(139,10,31,.4));
   }
   @keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.2); } }
   .since { margin-top: 32px; color: var(--soft); }
@@ -121,6 +130,37 @@
   .track.active { background: var(--blush); color: var(--rose); font-weight: 600; }
   .track small { display: block; color: var(--soft); font-weight: 400; }
 
+  /* Scroll fade-in */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .heart { animation: none; }
+  }
+
+  /* Reasons I love you */
+  .reason-card {
+    background: linear-gradient(135deg, #7a0f25, #4a0816);
+    color: #fff; border-radius: 24px;
+    padding: 40px clamp(20px, 5vw, 48px);
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(122, 15, 37, .25);
+  }
+  .reason-card .num { color: #f3b7c3; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; }
+  .reason-card .text {
+    font-family: "Playfair Display", Georgia, serif; font-style: italic;
+    font-size: clamp(1.3rem, 4vw, 1.8rem); line-height: 1.5;
+    min-height: 5.5em; display: flex; align-items: center; justify-content: center;
+    margin: 14px 0 22px; transition: opacity .25s ease;
+  }
+  .reason-card .text.swap { opacity: 0; }
+  .reason-card button {
+    font: inherit; font-weight: 600; cursor: pointer;
+    background: #fbe3e8; color: #7a0f25; border: 0; border-radius: 999px;
+    padding: 12px 28px;
+  }
+  .reason-card button:hover { background: #fff; }
+
   footer { text-align: center; color: var(--soft); padding: 40px 20px 60px; }
 </style>
 </head>
@@ -134,23 +174,23 @@
     me:  { name: "Me",  photo: "images/me.jpg" },
     him: { name: "You", photo: "images/him.jpeg" },
     // Your start date (YYYY-MM-DD), or leave "" to hide the counter
-    together_since: "2026-08-22",
+    together_since: "2024-01-01",
 
     letter_title: "A letter for my Paladin",
     letter: [
-      "Hi Ekiru... my love,",
+      "Hi love,",
       "I made this little corner of the internet just for us. We don't have a photo together yet, but I wanted you to see that even apart, we belong in the same frame.",
       "On the days you feel tired, doubtful, or not enough: you are. You are more than enough, exactly as you are, today.",
       "I'm proud of you, I'm on your team, and I'm not going anywhere."
     ],
-    letter_sign: "Always yours, Siaka",
+    letter_sign: "Always yours",
 
     reminders: [
-      { icon: "🌹", text: "You are loved on your best days and on your worst days. No difference." },
+      { icon: "🌷", text: "You are loved on your best days and on your worst days. No difference." },
       { icon: "🤝", text: "We're a team. Whatever it is, we face it together." },
       { icon: "🌙", text: "Even when we're far apart, I'm thinking of you." },
       { icon: "✨", text: "You make ordinary days feel special." },
-      { icon: "🥰", text: "It's okay to rest. I'll still be here when you wake up." },
+      { icon: "🫶", text: "It's okay to rest. I'll still be here when you wake up." },
       { icon: "🌍", text: "I choose you. Today, tomorrow, and the day after that." }
     ],
 
@@ -171,7 +211,22 @@
       { photo: "images/moment1.jpeg", caption: "Me, thinking of you" },
       { photo: "images/moment2.jpeg", caption: "You, being you" },
       { photo: "images/moment3.jpeg", caption: "A favourite day" },
-      { photo: "images/moment4.jpeg", caption: "The face I'm in love with" }
+      { photo: "images/moment4.jpeg", caption: "Your smile" }
+    ],
+
+    // Reasons I love you. Replace these with your own. Add as many as you like.
+    reasons_title: "Reasons I love you",
+    reasons: [
+      "The way you make me feel safe without even trying.",
+      "Your laugh. It fixes my whole day.",
+      "How you show up, even when you're tired.",
+      "You listen like what I say really matters.",
+      "You make ordinary days feel like something.",
+      "Your kindness, especially when no one is watching.",
+      "How you believe in me when I don't.",
+      "The way you say my name.",
+      "You are home to me.",
+      "Because with you, I get to just be myself."
     ],
 
     // Our songs. Put the audio files in the "music" folder and match the file names here.
@@ -183,7 +238,7 @@
       { title: "The Sweetest Taboo", artist: "Sade", file: "music/the-sweetest-taboo.mp3" }
     ],
 
-    footer: "Made with love, by Siaka 💗"
+    footer: "Made with love 💗"
   };
 </script>
 <!-- ============ END EDIT ============ -->
@@ -223,6 +278,16 @@
   <h2 class="title" id="momentsTitle"></h2>
   <p class="lead">Until we have one together, these will do.</p>
   <div class="gallery" id="gallery"></div>
+</section>
+
+<section id="reasonsSection">
+  <h2 class="title" id="reasonsTitle"></h2>
+  <p class="lead">Tap for another one.</p>
+  <div class="reason-card">
+    <div class="num" id="reasonNum"></div>
+    <div class="text" id="reasonText"></div>
+    <button id="reasonBtn" type="button">Next reason ♥</button>
+  </div>
 </section>
 
 <section id="musicSection">
@@ -279,6 +344,30 @@
     $("momentsSection").style.display = "none";
   }
 
+  if (CONFIG.reasons.length) {
+    $("reasonsTitle").textContent = CONFIG.reasons_title;
+    let r = -1;
+    const txt = $("reasonText"), num = $("reasonNum");
+    function showReason(first) {
+      let next;
+      do { next = Math.floor(Math.random() * CONFIG.reasons.length); }
+      while (CONFIG.reasons.length > 1 && next === r);
+      r = next;
+      const apply = () => {
+        txt.textContent = CONFIG.reasons[r];
+        num.textContent = `Reason #${r + 1} of ${CONFIG.reasons.length}`;
+        txt.classList.remove("swap");
+      };
+      if (first) { apply(); return; }
+      txt.classList.add("swap");
+      setTimeout(apply, 250);
+    }
+    $("reasonBtn").addEventListener("click", () => showReason(false));
+    showReason(true);
+  } else {
+    $("reasonsSection").style.display = "none";
+  }
+
   if (CONFIG.music.length) {
     $("musicTitle").textContent = CONFIG.music_title;
     const audio = $("audio");
@@ -303,6 +392,15 @@
   }
 
   $("footer").textContent = CONFIG.footer;
+
+  // Fade sections in as they scroll into view
+  const targets = document.querySelectorAll("section, .letter, .note, details");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    targets.forEach(t => { t.classList.add("reveal"); io.observe(t); });
+  }
 </script>
 </body>
 </html>
