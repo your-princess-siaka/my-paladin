@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Dream Realm</title>
+<meta name="theme-color" content="#12060e">
+<link rel="icon" type="image/png" href="images/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f6e9ee;--soft:#c9a4b2;--rose:#e58aa0;--gold:#f7d794}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(120% 90% at 50% 0,#3a0f2a,#12060e 70%) fixed;color:var(--ink);font:400 1rem/1.7 Nunito,system-ui,sans-serif;overflow-x:hidden}
+h1,h2{font-family:"Playfair Display",Georgia,serif;font-weight:500;margin:0}
+h1{font-size:clamp(2.2rem,8vw,3.8rem);color:var(--gold)}
+h2{font-size:clamp(1.6rem,5vw,2.2rem);color:var(--gold);margin-bottom:6px}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main{position:relative;z-index:1}
+section{max-width:720px;margin:0 auto;padding:56px 20px;text-align:center}
+.lead{color:var(--soft);margin:0 0 22px}
+.glass{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:28px;backdrop-filter:blur(8px)}
+button,.btn{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:999px;padding:12px 26px;background:var(--rose);color:#3a0f1f;text-decoration:none;display:inline-block;margin:4px}
+button:hover{filter:brightness(1.1)}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--soft)}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px;margin:6px 0}
+textarea{min-height:110px;resize:vertical}
+.top{position:fixed;top:12px;z-index:5;font-size:.9rem;padding:8px 16px;background:rgba(18,6,14,.7);color:var(--ink);border:1px solid rgba(255,255,255,.2)}
+#snd{right:12px}.back{left:12px}
+/* orbs */
+#orbs{position:relative;height:130px;margin:34px 0 8px;--d:1}
+.orb{position:absolute;top:0;left:50%;width:120px;height:120px;margin-left:-60px;border-radius:50%;overflow:hidden;border:3px solid #fff;box-shadow:0 0 30px rgba(229,138,160,.5);background:#5a1a3a}
+.orb img{width:100%;height:100%;object-fit:cover;display:block}
+#oA{transform:translateX(calc(-32px - var(--d)*min(30vw,170px)))}
+#oB{transform:translateX(calc(32px + var(--d)*min(30vw,170px)))}
+#orbs.m .orb{box-shadow:0 0 60px 10px rgba(247,215,148,.7)}
+#burst{position:absolute;left:50%;top:50%;font-size:2.4rem;color:#ff4d6d;opacity:0;pointer-events:none}
+#burst.go{animation:pop 1.6s ease-out}
+@keyframes pop{0%{opacity:1;transform:translate(-50%,-50%) scale(.5)}100%{opacity:0;transform:translate(-50%,-300%) scale(3)}}
+#gap{width:min(320px,80%);accent-color:var(--rose)}
+/* dream + quest */
+#dream{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(1.15rem,3.6vw,1.45rem);line-height:1.6}
+#dream small{display:block;font:600 .8rem Nunito,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;font-style:normal}
+#qt{min-height:8em;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+/* heartbeat */
+.hb{font-size:5.5rem;line-height:1;background:none;color:#ff4d6d;padding:0;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;filter:drop-shadow(0 0 18px rgba(255,77,109,.6))}
+.hb.b{animation:thump .5s}
+@keyframes thump{0%{transform:scale(1)}20%{transform:scale(1.3)}40%{transform:scale(1.05)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.row{display:flex;gap:8px}
+.row input{margin:6px 0}
+#out{word-break:break-all;color:var(--gold);font-size:.9rem}
+/* incoming seal */
+#seal{position:fixed;inset:0;z-index:20;background:rgba(10,3,8,.92);display:flex;align-items:center;justify-content:center;padding:20px}
+#seal[hidden]{display:none}
+#seal .glass{max-width:520px;width:100%;font-family:"Playfair Display",Georgia,serif;font-size:1.2rem}
+#seal p{white-space:pre-wrap}
+footer{position:relative;z-index:1;text-align:center;color:var(--soft);padding:30px 20px 60px}
+@media (prefers-reduced-motion:reduce){.hb.b,#burst.go{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+<a class="btn top back" href="index.html">← Back</a>
+<button class="top" id="snd" type="button">🌙 Dream sound: off</button>
+
+<main>
+<section>
+  <h1>Our Dream Realm</h1>
+  <p class="lead">Where nothing is too much to wish for. Tap the sky anywhere. ✨</p>
+  <div id="orbs">
+    <div class="orb" id="oA"><img src="images/me.jpg" alt="" onerror="this.style.display='none'"></div>
+    <div class="orb" id="oB"><img src="images/him.jpeg" alt="" onerror="this.style.display='none'"></div>
+    <div id="burst">♥</div>
+  </div>
+  <input type="range" id="gap" min="0" max="100" value="0" aria-label="Bring us closer">
+  <p class="lead" id="gapTxt"></p>
+</section>
+
+<section>
+  <h2>Tonight's shared dream</h2>
+  <p class="lead">Same sky, same dream, on both our phones.</p>
+  <div class="glass" id="dream"></div>
+  <p><button type="button" id="dreamSnd">Dream it together 🌙</button></p>
+</section>
+
+<section>
+  <h2>The Paladin's Oath</h2>
+  <p class="lead">A tiny quest. Choose your path, Princess.</p>
+  <div class="glass"><div id="qt"></div><div id="qc"></div></div>
+</section>
+
+<section>
+  <h2>Release a wish</h2>
+  <p class="lead">It becomes a lantern in the sky above. It stays, and it keeps rising.</p>
+  <div class="glass">
+    <div class="row"><input id="wish" maxlength="80" placeholder="I wish…"><button type="button" id="wishBtn">Release</button></div>
+  </div>
+</section>
+
+<section>
+  <h2>Send a sealed dream</h2>
+  <p class="lead">Write it, seal it, and send the link. Add a date and it stays locked until then.</p>
+  <div class="glass">
+    <input id="from" maxlength="30" placeholder="From (your name)">
+    <textarea id="msg" maxlength="700" placeholder="Write your dream, fantasy, or secret…"></textarea>
+    <label class="lead" style="display:block;text-align:left">Locked until (optional)<input id="unlock" type="date"></label>
+    <button type="button" id="mk">Seal it ✨</button>
+    <p id="out"></p>
+  </div>
+</section>
+
+<section>
+  <h2>Feel my heartbeat</h2>
+  <p class="lead">Press and hold. On a phone, you'll feel it too.</p>
+  <button class="hb" id="hb" type="button" aria-label="Hold to feel a heartbeat">♥</button>
+</section>
+</main>
+
+<div id="seal" hidden><div class="glass" id="sealBody"></div></div>
+<footer>Made with love, under every sky 💗</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- Sky: stars, shooting stars, wish lanterns ---------- */
+const cv=$("sky"),cx=cv.getContext("2d");let W,H,stars=[],shoots=[],lant=[];
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+addEventListener("resize",rs);rs();
+for(let i=0;i<130;i++)stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.4+.3,p:Math.random()*6.28});
+function shoot(){shoots.push({x:Math.random()*W*.8,y:Math.random()*H*.4,vx:6+Math.random()*4,vy:3+Math.random()*2,l:60})}
+addEventListener("pointerdown",e=>{if(!e.target.closest("button,input,textarea,a,label"))shoot()});
+if(!RM)setInterval(shoot,7000);
+function addL(t,fresh){lant.push({x:W*.1+Math.random()*W*.8,y:fresh&&!RM?H+30:H*.2+Math.random()*H*.7,t,s:RM?0:.25+Math.random()*.3})}
+let wishes=[];try{wishes=JSON.parse(localStorage.getItem("paladin-wishes")||"[]")}catch(e){}
+wishes.forEach(w=>addL(w,false));
+function loop(t){
+  cx.clearRect(0,0,W,H);cx.fillStyle="#fff";
+  stars.forEach(s=>{cx.globalAlpha=.35+.65*Math.abs(Math.sin(t/1600+s.p));cx.beginPath();cx.arc(s.x*W,s.y*H,s.r,0,6.28);cx.fill()});
+  shoots=shoots.filter(o=>o.l>0);
+  shoots.forEach(o=>{cx.globalAlpha=o.l/60;cx.strokeStyle="#f7d794";cx.lineWidth=2;cx.beginPath();cx.moveTo(o.x,o.y);cx.lineTo(o.x-o.vx*8,o.y-o.vy*8);cx.stroke();o.x+=o.vx;o.y+=o.vy;o.l--});
+  lant.forEach(l=>{
+    l.y-=l.s;if(l.y<-60)l.y=H+40;
+    const g=cx.createRadialGradient(l.x,l.y,2,l.x,l.y,40);g.addColorStop(0,"rgba(247,215,148,.9)");g.addColorStop(1,"rgba(247,215,148,0)");
+    cx.globalAlpha=1;cx.fillStyle=g;cx.fillRect(l.x-40,l.y-40,80,80);
+    cx.fillStyle="#ffe3a3";cx.fillRect(l.x-7,l.y-10,14,20);
+    cx.globalAlpha=.8;cx.fillStyle="#f6e9ee";cx.font="italic 13px Nunito,sans-serif";cx.textAlign="center";cx.fillText(l.t.slice(0,40),l.x,l.y+30);
+  });
+  cx.globalAlpha=1;requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+$("wishBtn").onclick=()=>{
+  const v=$("wish").value.trim();if(!v)return;
+  addL(v,true);wishes=[...wishes,v].slice(-12);
+  try{localStorage.setItem("paladin-wishes",JSON.stringify(wishes))}catch(e){}
+  $("wish").value="";shoot();
+};
+
+/* ---------- Distance slider: bring us closer ---------- */
+let merged=false;
+function setGap(){
+  const v=+$("gap").value;
+  $("orbs").style.setProperty("--d",1-v/100);
+  $("gapTxt").textContent=v>=100?"There. No distance at all. I'm right here. 💞":v>70?"So close…":v>30?"Almost…":v>0?"Come here…":"Drag to close the distance between us.";
+  $("orbs").classList.toggle("m",v>=100);
+  if(v>=100&&!merged){merged=true;$("burst").classList.remove("go");void $("burst").offsetWidth;$("burst").classList.add("go");for(let i=0;i<6;i++)setTimeout(shoot,i*150);navigator.vibrate&&navigator.vibrate([40,60,40,60,200])}
+  if(v<100)merged=false;
+}
+$("gap").addEventListener("input",setGap);setGap();
+
+/* ---------- Tonight's shared dream (same seed for both of us) ---------- */
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const day=new Date().toISOString().slice(0,10);let seed=0;for(const c of day)seed=seed*31+c.charCodeAt(0)|0;
+const R=rng(seed),pick=a=>a[R()*a.length|0];
+const place=pick(["a lantern-lit market floating above the clouds","a moonlit beach where the sea glows blue","an old castle library with a ceiling of stars","a field of fireflies at the edge of the world","a train that runs straight through the aurora","a rooftop in a city made of music","a secret garden where every flower hums","a candlelit ship drifting on a silver sea"]);
+const doing=pick(["we dance without any music, because we are the music","we trade secrets only the stars may hear","we race the wind, and I let you win","we build a fort out of blankets and moonlight","we sit shoulder to shoulder and say nothing, perfectly","we follow a glowing path just to see where it leads"]);
+const sign=pick(["a single white feather","the smell of rain","a door that wasn't there before","a song you almost know","a golden thread tied around your wrist"]);
+const d=$("dream");const sm=document.createElement("small");sm.textContent="Dream for "+day;
+d.append(sm,`Tonight, we meet in ${place}. There, ${doing}. If you see ${sign}, that was me. Tell me everything in the morning.`);
+
+/* ---------- The Paladin's Oath ---------- */
+const Q={
+ start:{t:"The castle gates open at dusk. You find me kneeling in the moonlight, sword laid down. “Princess,” I say, “I'd cross any kingdom for you. Which way shall we go?”",c:[["Through the whispering forest","f"],["Across the starlit sea","s"]]},
+ f:{t:"The trees lean in and hum our song. A fox leads us to a hidden spring, and I cup the water in my hands for you. Even knights can be gentle. What do you wish for?",c:[["A promise","p"],["A dance","d"]]},
+ s:{t:"The sea turns to glass beneath us and every step ripples with light. Halfway across, I take your hand: “Whatever waits on the other shore, we meet it together.”",c:[["Hold on tighter","p"],["Laugh and pull me forward","d"]]},
+ p:{t:"The Oath: I swear to guard your heart, to be your safest place, and to choose you in every realm. The oath is sealed, and the stars are witnesses. 🗡️💗"},
+ d:{t:"We dance until the stars lean in to watch. Somewhere a lantern rises, a wish with both our names on it. The realm is ours. 🌌"}
+};
+function q(k){
+  const n=Q[k];$("qt").textContent=n.t;const c=$("qc");c.textContent="";
+  (n.c||[["Begin again ↺","start"]]).forEach(([l,to])=>{const b=document.createElement("button");b.type="button";b.textContent=l;if(!n.c)b.className="ghost";b.onclick=()=>q(to);c.append(b)});
+}
+q("start");
+
+/* ---------- Dream sound (generated live, no files) + heartbeat ---------- */
+let AC,master,on=false;
+function audio(){
+  if(AC)return;
+  AC=new(window.AudioContext||window.webkitAudioContext)();master=AC.createGain();master.gain.value=0;
+  const lp=AC.createBiquadFilter();lp.type="lowpass";lp.frequency.value=700;master.connect(lp);lp.connect(AC.destination);
+  [110,164.81,220,277.18,329.63].forEach((f,i)=>{
+    const o=AC.createOscillator(),g=AC.createGain(),l=AC.createOscillator(),lg=AC.createGain();
+    o.frequency.value=f;o.detune.value=i*3;g.gain.value=.08;l.frequency.value=.05+i*.03;lg.gain.value=.04;
+    l.connect(lg);lg.connect(g.gain);o.connect(g);g.connect(master);o.start();l.start();
+  });
+  setInterval(()=>{if(on)bell([659.25,739.99,880,987.77,1108.73][Math.random()*5|0])},3800);
+}
+function bell(f){
+  const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;
+  o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+3);
+  o.connect(g);g.connect(AC.destination);o.start();o.stop(t+3.1);
+}
+function snd(){
+  audio();AC.resume();on=!on;
+  master.gain.linearRampToValueAtTime(on?.7:0,AC.currentTime+2);
+  $("snd").textContent=on?"🌙 Dream sound: on":"🌙 Dream sound: off";
+}
+$("snd").onclick=snd;$("dreamSnd").onclick=()=>{if(!on)snd();scrollTo({top:0,behavior:"smooth"})};
+function thump(){
+  audio();AC.resume();
+  [0,.18].forEach((dl,i)=>{
+    const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+dl;
+    o.frequency.setValueAtTime(70,t);o.frequency.exponentialRampToValueAtTime(40,t+.15);
+    g.gain.setValueAtTime(.5/(i+1),t);g.gain.exponentialRampToValueAtTime(.001,t+.2);
+    o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.25);
+  });
+}
+let hbT;const hb=$("hb");
+function beat(){hb.classList.remove("b");void hb.offsetWidth;hb.classList.add("b");navigator.vibrate&&navigator.vibrate([70,90,110]);thump()}
+hb.addEventListener("pointerdown",e=>{e.preventDefault();clearInterval(hbT);beat();hbT=setInterval(beat,900)});
+["pointerup","pointerleave","pointercancel"].forEach(ev=>hb.addEventListener(ev,()=>clearInterval(hbT)));
+
+/* ---------- Sealed dreams: the whole message lives inside the link ---------- */
+const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const dec=s=>JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/")))));
+$("mk").onclick=async()=>{
+  const m=$("msg").value.trim();if(!m)return;
+  const url=location.href.split("#")[0]+"#d="+enc({m,f:$("from").value.trim(),u:$("unlock").value});
+  $("out").textContent=url;
+  try{
+    if(navigator.share)await navigator.share({title:"A sealed dream for you",text:"I sealed a dream for you ✨",url});
+    else{await navigator.clipboard.writeText(url);$("out").textContent="Link copied! Send it: "+url}
+  }catch(e){}
+};
+function el(tag,txt){const e=document.createElement(tag);e.textContent=txt;return e}
+function showSeal(){
+  const h=location.hash.match(/^#d=(.+)$/);if(!h)return;
+  let o;try{o=dec(h[1])}catch(e){return}
+  if(typeof o.m!=="string")return;
+  const box=$("sealBody");box.textContent="";$("seal").hidden=false;
+  const who=o.f?o.f:"someone who loves you";
+  const close=el("button","Close");close.className="ghost";close.onclick=()=>{$("seal").hidden=true;history.replaceState(null,"",location.pathname)};
+  const ud=o.u?new Date(o.u+"T00:00:00"):null;
+  if(ud&&ud>new Date()){
+    const days=Math.ceil((ud-new Date())/864e5);
+    box.append(el("p","🔒"),el("p",`A dream from ${who} is sealed until ${ud.toLocaleDateString(undefined,{dateStyle:"long"})}.`),el("p",`${days} day${days>1?"s":""} to go. Worth the wait.`),close);
+    return;
+  }
+  const open=el("button","Break the seal ✨");
+  open.onclick=()=>{
+    box.textContent="";const p=el("p","");box.append(el("p",`A dream from ${who}`),p,close);shoot();navigator.vibrate&&navigator.vibrate(120);
+    let i=0;const iv=setInterval(()=>{p.textContent=o.m.slice(0,++i);if(i>=o.m.length)clearInterval(iv)},35);
+  };
+  box.append(el("p","💌"),el("p",`A sealed dream from ${who} has arrived.`),open,close);
+}
+showSeal();addEventListener("hashchange",showSeal);
+</script>
+</body>
+</html>
