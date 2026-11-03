@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Our Dream Realm</title>
-<meta name="theme-color" content="#12060e">
+<meta name="theme-color" content="#0d0716">
 <link rel="icon" type="image/png" href="images/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#f6e9ee;--soft:#c9a4b2;--rose:#e58aa0;--gold:#f7d794}
+:root{--ink:#f3e8e4;--soft:#b9a8c4;--rose:#d98ba3;--gold:#e8cf9f}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(120% 90% at 50% 0,#3a0f2a,#12060e 70%) fixed;color:var(--ink);font:400 1rem/1.7 Nunito,system-ui,sans-serif;overflow-x:hidden}
+body{margin:0;background:radial-gradient(70% 50% at 15% 8%,rgba(122,31,64,.55),transparent 70%),radial-gradient(60% 50% at 88% 75%,rgba(70,50,120,.45),transparent 70%),linear-gradient(#0d0716,#1a0b22 55%,#240d27) fixed;color:var(--ink);font:400 1rem/1.7 Nunito,system-ui,sans-serif;overflow-x:hidden}
 h1,h2{font-family:"Playfair Display",Georgia,serif;font-weight:500;margin:0}
 h1{font-size:clamp(2.2rem,8vw,3.8rem);color:var(--gold)}
 h2{font-size:clamp(1.6rem,5vw,2.2rem);color:var(--gold);margin-bottom:6px}
@@ -19,38 +19,46 @@ h2{font-size:clamp(1.6rem,5vw,2.2rem);color:var(--gold);margin-bottom:6px}
 main{position:relative;z-index:1}
 section{max-width:720px;margin:0 auto;padding:56px 20px;text-align:center}
 .lead{color:var(--soft);margin:0 0 22px}
-.glass{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:28px;backdrop-filter:blur(8px)}
-button,.btn{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:999px;padding:12px 26px;background:var(--rose);color:#3a0f1f;text-decoration:none;display:inline-block;margin:4px}
+.glass{background:rgba(255,245,240,.06);border:1px solid rgba(232,207,159,.22);border-radius:24px;padding:28px;backdrop-filter:blur(8px)}
+button,.btn{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:999px;padding:12px 26px;background:linear-gradient(135deg,#e6a3b6,#c9748f);color:#2a0c1c;text-decoration:none;display:inline-block;margin:4px}
 button:hover{filter:brightness(1.1)}
 button.ghost{background:transparent;color:var(--ink);border:1px solid var(--soft)}
 input,textarea{width:100%;font:inherit;color:var(--ink);background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px;margin:6px 0}
 textarea{min-height:110px;resize:vertical}
-.top{position:fixed;top:12px;z-index:5;font-size:.9rem;padding:8px 16px;background:rgba(18,6,14,.7);color:var(--ink);border:1px solid rgba(255,255,255,.2)}
+.top{position:fixed;top:12px;z-index:5;font-size:.9rem;padding:8px 16px;background:rgba(13,7,22,.75);color:var(--ink);border:1px solid rgba(255,255,255,.2)}
 #snd{right:12px}.back{left:12px}
 /* orbs */
 #orbs{position:relative;height:130px;margin:34px 0 8px;--d:1}
-.orb{position:absolute;top:0;left:50%;width:120px;height:120px;margin-left:-60px;border-radius:50%;overflow:hidden;border:3px solid #fff;box-shadow:0 0 30px rgba(229,138,160,.5);background:#5a1a3a}
+.orb{position:absolute;top:0;left:50%;width:120px;height:120px;margin-left:-60px;border-radius:50%;overflow:hidden;border:3px solid #f3e3d0;box-shadow:0 0 30px rgba(217,139,163,.45);background:#3a1631}
 .orb img{width:100%;height:100%;object-fit:cover;display:block}
 #oA{transform:translateX(calc(-32px - var(--d)*min(30vw,170px)))}
 #oB{transform:translateX(calc(32px + var(--d)*min(30vw,170px)))}
-#orbs.m .orb{box-shadow:0 0 60px 10px rgba(247,215,148,.7)}
-#burst{position:absolute;left:50%;top:50%;font-size:2.4rem;color:#ff4d6d;opacity:0;pointer-events:none}
+#orbs.m .orb{box-shadow:0 0 60px 10px rgba(232,207,159,.65)}
+#burst{position:absolute;left:50%;top:50%;font-size:2.4rem;color:#e0607e;opacity:0;pointer-events:none}
 #burst.go{animation:pop 1.6s ease-out}
 @keyframes pop{0%{opacity:1;transform:translate(-50%,-50%) scale(.5)}100%{opacity:0;transform:translate(-50%,-300%) scale(3)}}
 #gap{width:min(320px,80%);accent-color:var(--rose)}
 /* dream + quest */
 #dream{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(1.15rem,3.6vw,1.45rem);line-height:1.6}
 #dream small{display:block;font:600 .8rem Nunito,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;font-style:normal}
-#qt{min-height:8em;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+.book{border:3px double rgba(232,207,159,.45)}
+#qch{font:600 .8rem Nunito,sans-serif;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+#qch::after{content:"❦";display:block;font-size:1.3rem;letter-spacing:0;margin:6px 0 10px}
+#qt{min-height:12em;font:italic 1.2rem/1.9 "Playfair Display",Georgia,serif;display:flex;align-items:center;justify-content:center}
+.bd{margin-bottom:14px;text-align:left}
+.bd h3{font:500 1.3rem "Playfair Display",Georgia,serif;color:var(--gold);margin:0}
+.bd small{color:var(--soft)}
+.bd p{font:italic 1.05rem/1.8 "Playfair Display",Georgia,serif;margin:10px 0 0}
+.bd summary{cursor:pointer;color:var(--rose);font-weight:600;margin-top:8px}
 /* heartbeat */
-.hb{font-size:5.5rem;line-height:1;background:none;color:#ff4d6d;padding:0;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;filter:drop-shadow(0 0 18px rgba(255,77,109,.6))}
+.hb{font-size:5.5rem;line-height:1;background:none;color:#d9546f;padding:0;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;filter:drop-shadow(0 0 18px rgba(217,84,111,.55))}
 .hb.b{animation:thump .5s}
 @keyframes thump{0%{transform:scale(1)}20%{transform:scale(1.3)}40%{transform:scale(1.05)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
 .row{display:flex;gap:8px}
 .row input{margin:6px 0}
 #out{word-break:break-all;color:var(--gold);font-size:.9rem}
 /* incoming seal */
-#seal{position:fixed;inset:0;z-index:20;background:rgba(10,3,8,.92);display:flex;align-items:center;justify-content:center;padding:20px}
+#seal{position:fixed;inset:0;z-index:20;background:rgba(8,4,14,.93);display:flex;align-items:center;justify-content:center;padding:20px}
 #seal[hidden]{display:none}
 #seal .glass{max-width:520px;width:100%;font-family:"Playfair Display",Georgia,serif;font-size:1.2rem}
 #seal p{white-space:pre-wrap}
@@ -84,9 +92,15 @@ footer{position:relative;z-index:1;text-align:center;color:var(--soft);padding:3
 </section>
 
 <section>
-  <h2>The Paladin's Oath</h2>
-  <p class="lead">A tiny quest. Choose your path, Princess.</p>
-  <div class="glass"><div id="qt"></div><div id="qc"></div></div>
+  <h2>Birthday letters</h2>
+  <p class="lead">Two letters, sealed until the day each of us turns a year older.</p>
+  <div id="bd"></div>
+</section>
+
+<section>
+  <h2>Chapters of Us</h2>
+  <p class="lead">A little love story, told the old-fashioned way. Turn the pages.</p>
+  <div class="glass book"><div id="qch"></div><div id="qt"></div><div id="qc"></div></div>
 </section>
 
 <section>
@@ -138,13 +152,13 @@ function loop(t){
   cx.clearRect(0,0,W,H);cx.fillStyle="#fff";
   stars.forEach(s=>{cx.globalAlpha=.35+.65*Math.abs(Math.sin(t/1600+s.p));cx.beginPath();cx.arc(s.x*W,s.y*H,s.r,0,6.28);cx.fill()});
   shoots=shoots.filter(o=>o.l>0);
-  shoots.forEach(o=>{cx.globalAlpha=o.l/60;cx.strokeStyle="#f7d794";cx.lineWidth=2;cx.beginPath();cx.moveTo(o.x,o.y);cx.lineTo(o.x-o.vx*8,o.y-o.vy*8);cx.stroke();o.x+=o.vx;o.y+=o.vy;o.l--});
+  shoots.forEach(o=>{cx.globalAlpha=o.l/60;cx.strokeStyle="#e8cf9f";cx.lineWidth=2;cx.beginPath();cx.moveTo(o.x,o.y);cx.lineTo(o.x-o.vx*8,o.y-o.vy*8);cx.stroke();o.x+=o.vx;o.y+=o.vy;o.l--});
   lant.forEach(l=>{
     l.y-=l.s;if(l.y<-60)l.y=H+40;
-    const g=cx.createRadialGradient(l.x,l.y,2,l.x,l.y,40);g.addColorStop(0,"rgba(247,215,148,.9)");g.addColorStop(1,"rgba(247,215,148,0)");
+    const g=cx.createRadialGradient(l.x,l.y,2,l.x,l.y,40);g.addColorStop(0,"rgba(232,207,159,.9)");g.addColorStop(1,"rgba(232,207,159,0)");
     cx.globalAlpha=1;cx.fillStyle=g;cx.fillRect(l.x-40,l.y-40,80,80);
-    cx.fillStyle="#ffe3a3";cx.fillRect(l.x-7,l.y-10,14,20);
-    cx.globalAlpha=.8;cx.fillStyle="#f6e9ee";cx.font="italic 13px Nunito,sans-serif";cx.textAlign="center";cx.fillText(l.t.slice(0,40),l.x,l.y+30);
+    cx.fillStyle="#f3dfb4";cx.fillRect(l.x-7,l.y-10,14,20);
+    cx.globalAlpha=.8;cx.fillStyle="#f3e8e4";cx.font="italic 13px Nunito,sans-serif";cx.textAlign="center";cx.fillText(l.t.slice(0,40),l.x,l.y+30);
   });
   cx.globalAlpha=1;requestAnimationFrame(loop);
 }
@@ -178,19 +192,45 @@ const sign=pick(["a single white feather","the smell of rain","a door that wasn'
 const d=$("dream");const sm=document.createElement("small");sm.textContent="Dream for "+day;
 d.append(sm,`Tonight, we meet in ${place}. There, ${doing}. If you see ${sign}, that was me. Tell me everything in the morning.`);
 
-/* ---------- The Paladin's Oath ---------- */
+/* ---------- Chapters of Us (edit the words freely) ---------- */
+const SD=Math.max(0,Math.floor((Date.now()-new Date("2026-08-22T00:00:00"))/864e5));
 const Q={
- start:{t:"The castle gates open at dusk. You find me kneeling in the moonlight, sword laid down. “Princess,” I say, “I'd cross any kingdom for you. Which way shall we go?”",c:[["Through the whispering forest","f"],["Across the starlit sea","s"]]},
- f:{t:"The trees lean in and hum our song. A fox leads us to a hidden spring, and I cup the water in my hands for you. Even knights can be gentle. What do you wish for?",c:[["A promise","p"],["A dance","d"]]},
- s:{t:"The sea turns to glass beneath us and every step ripples with light. Halfway across, I take your hand: “Whatever waits on the other shore, we meet it together.”",c:[["Hold on tighter","p"],["Laugh and pull me forward","d"]]},
- p:{t:"The Oath: I swear to guard your heart, to be your safest place, and to choose you in every realm. The oath is sealed, and the stars are witnesses. 🗡️💗"},
- d:{t:"We dance until the stars lean in to watch. Somewhere a lantern rises, a wish with both our names on it. The realm is ours. 🌌"}
+ start:{h:"Chapter I · The Hello",t:"There are hellos that fade by morning, and then there is yours. It arrived quietly, the way the best things do, and rearranged the whole room of my heart without moving a single chair.",c:[["Read of the evenings","e"],["Read of the distance","d"]]},
+ e:{h:"Chapter II · The Evenings",t:"Lamplight, a telephone warm against my ear, and your voice laid down like a ribbon across the miles. We spoke of nothing at all, and nothing has never been so full.",c:[["Turn the page","t"]]},
+ d:{h:"Chapter II · The Distance",t:"They say a thousand miles divide two hearts, but no one measures them in lullabies. Each goodnight is a small lantern set upon the water, and I trust the current to carry it to you.",c:[["Turn the page","t"]]},
+ t:{h:"Chapter III · The Turning",t:"Somewhere between a good morning and a goodnight I understood: love is not a thunderclap, but a slow and certain dawn. You were the light in the window long before I knew to look.",c:[["Read the vow","v"]]},
+ v:{h:"Chapter IV · The Vow",t:"Let it be written, in ink that does not fade: that I will cherish you in every season, keep the door of my heart open to you, and love you plainly, gently, and for a long, long time. Yours, since the twenty-second of August, and every one of these {days} days since."}
 };
 function q(k){
-  const n=Q[k];$("qt").textContent=n.t;const c=$("qc");c.textContent="";
+  const n=Q[k];$("qch").textContent=n.h;$("qt").textContent=n.t.replace("{days}",SD);const c=$("qc");c.textContent="";
   (n.c||[["Begin again ↺","start"]]).forEach(([l,to])=>{const b=document.createElement("button");b.type="button";b.textContent=l;if(!n.c)b.className="ghost";b.onclick=()=>q(to);c.append(b)});
 }
 q("start");
+
+/* ---------- Birthday letters: unlock on the day (add more years below) ---------- */
+const BDAY=[
+ {who:"For his birthday",born:2001,date:"2027-02-14",title:"Happy birthday, my love",sign:"Forever yours",
+  text:["My dearest,","Another year has dressed itself in your name, and the whole world is a little softer for it. I hope today is gentle with you: sweet things, warm voices, and no hurry at all.","Whatever this year brings, I will be among those who clap the loudest for you, and when the crowd goes home, I will still be here.","Come back to me tonight, and let me say it in my own voice."]},
+ {who:"For her birthday",born:2002,date:"2027-05-03",title:"Happy birthday, my darling",sign:"Always yours",
+  text:["My darling,","The world grew a little lovelier on the third of May, and I have been quietly grateful ever since I learned it.","May this year hold you the way you hold everyone else: tenderly, and without being asked.","I am so glad you were born, and gladder still that you are mine."]}
+];
+(function(){
+  const box=$("bd"),now=new Date(),seen={},fmt={day:"numeric",month:"long",year:"numeric"};
+  BDAY.sort((a,b)=>a.date.localeCompare(b.date)).forEach(L=>{
+    const u=new Date(L.date+"T00:00:00"),age=u.getFullYear()-L.born,open=now>=u;
+    if(!open){if(seen[L.who])return;seen[L.who]=1}
+    const card=document.createElement("div");card.className="glass bd";
+    card.append(el("h3",L.who+" · turning "+age),el("small",u.toLocaleDateString(undefined,fmt)));
+    if(!open){
+      const n=Math.ceil((u-now)/864e5);
+      card.append(el("p",`🔒 Unlocks in ${n} day${n>1?"s":""}. Worth the wait.`));
+    }else{
+      const dt=document.createElement("details");dt.append(el("summary","Open the letter ✉️"),el("p",L.title));
+      L.text.forEach(t=>dt.append(el("p",t)));dt.append(el("p","— "+L.sign));card.append(dt);
+    }
+    box.append(card);
+  });
+})();
 
 /* ---------- Dream sound (generated live, no files) + heartbeat ---------- */
 let AC,master,on=false;
