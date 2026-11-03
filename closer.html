@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Closer</title>
+<meta name="theme-color" content="#0d0716">
+<link rel="icon" type="image/png" href="images/icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="images/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f3e8e4;--soft:#b9a8c4;--rose:#d98ba3;--gold:#e8cf9f}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(70% 50% at 15% 8%,rgba(122,31,64,.55),transparent 70%),radial-gradient(60% 50% at 88% 75%,rgba(70,50,120,.45),transparent 70%),linear-gradient(#0d0716,#1a0b22 55%,#240d27) fixed;color:var(--ink);font:400 1rem/1.7 Nunito,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:500;margin:0}
+h1{font-size:clamp(2.4rem,9vw,4rem);color:var(--gold)}
+h2{font-size:clamp(1.6rem,5vw,2.1rem);color:var(--gold);margin-bottom:6px}
+section{max-width:720px;margin:0 auto;padding:48px 20px;text-align:center}
+section[hidden]{display:none}
+.lead{color:var(--soft);margin:0 0 22px}
+.glass{background:rgba(255,245,240,.06);border:1px solid rgba(232,207,159,.22);border-radius:24px;padding:26px;backdrop-filter:blur(8px)}
+button,.btn{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:999px;padding:11px 22px;background:linear-gradient(135deg,#e6a3b6,#c9748f);color:#2a0c1c;text-decoration:none;display:inline-block;margin:4px}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--soft)}
+button.on{outline:2px solid var(--gold)}
+input[type=text],input[type=password]{width:100%;font:inherit;color:var(--ink);background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px;margin:6px 0;text-align:center}
+.nav{display:flex;justify-content:space-between;padding:14px 16px;position:relative;z-index:2}
+.nav a{color:var(--ink);text-decoration:none;font-size:.9rem;border:1px solid rgba(232,207,159,.3);border-radius:999px;padding:6px 14px;background:rgba(13,7,22,.6)}
+/* countdown */
+.cd{display:flex;justify-content:center;gap:10px;margin:10px 0 18px}
+.cd div{min-width:68px;padding:12px 6px;border-radius:16px;background:rgba(255,245,240,.06);border:1px solid rgba(232,207,159,.2);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.cd b{display:block;font:500 1.9rem "Playfair Display",serif;color:var(--gold);letter-spacing:0}
+.big{font:italic clamp(1.15rem,3.6vw,1.45rem)/1.7 "Playfair Display",Georgia,serif}
+#cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+.lan{position:fixed;bottom:-50px;font-size:2rem;z-index:29;pointer-events:none;animation:rise 8s ease-in forwards;filter:drop-shadow(0 0 12px #e8cf9f)}
+@keyframes rise{to{transform:translateY(-115vh);opacity:0}}
+/* moon */
+#moon{display:block;margin:0 auto 8px}
+/* map */
+#map{width:100%;max-width:520px;height:auto;display:block;margin:0 auto}
+#map circle.s{fill:#e8cf9f;cursor:pointer;filter:drop-shadow(0 0 6px #e8cf9f)}
+#map circle.s:hover,#map circle.s.sel{fill:#fff}
+#map circle.new{animation:pls 2s ease-in-out infinite}
+@keyframes pls{50%{r:9}}
+#mem{margin-top:14px;min-height:5.5em}
+#mem small{color:var(--soft)}
+/* mood */
+.breath{width:130px;height:130px;margin:20px auto;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(217,139,163,.5),rgba(122,31,64,.25));border:1px solid var(--gold);animation:br 12s ease-in-out infinite}
+@keyframes br{0%{transform:scale(.6)}33%{transform:scale(1)}50%{transform:scale(1)}100%{transform:scale(.6)}}
+#mood audio{width:100%;margin-top:10px}
+/* cards, quest, secret */
+#card{min-height:7em;display:flex;align-items:center;justify-content:center}
+.chk{display:flex;gap:12px;align-items:center;text-align:left;padding:10px 4px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--rose)}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin:14px 0 6px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--gold));transition:width .6s}
+.vn{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;text-align:left;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.vn audio{max-width:100%}
+.shake{animation:sh .4s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:40;background:#2a0c1c;border:1px solid var(--gold);border-radius:16px;padding:12px 18px;max-width:90%;text-align:center}
+#toast[hidden]{display:none}
+footer{text-align:center;color:var(--soft);padding:30px 20px 60px}
+#egg{cursor:pointer;user-select:none}
+@media (prefers-reduced-motion:reduce){.breath,.lan,#map circle.new{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="cf"></canvas>
+<div class="nav"><a href="index.html">← Home</a><a href="dreams.html">Dream Realm ✨</a></div>
+
+<script>
+/* ============ EDIT THIS PART ============ */
+const CFG={
+  meet:"",                       // date of our next meeting, e.g. "2027-02-14". Leave "" to hide the countdown.
+  meetPlace:"",                  // optional, e.g. "Nairobi"
+  reunion:"We dreamed of this moment so many times. Now it's real. Come here. 💗",
+  secretPass:"paladin",          // password for the secret letter
+  secretHint:"What you are to me",
+  secret:["You found the door.","I wanted one corner of this site that belongs only to you. Not a gift, not a lesson, just the truth: you are the best thing that happened to me this year, and I'm still learning how lucky that is.","Whenever you doubt it, come back here. The password is the answer."],
+  voice:[
+    {l:"Open when you can't sleep",f:"voice/cant-sleep.m4a"},
+    {l:"Open when you're having a hard day",f:"voice/hard-day.m4a"},
+    {l:"Open when you miss me",f:"voice/miss-you.m4a"}
+  ],
+  memories:[   // each one becomes a star. Add more, they join the map. date can be ""
+    {d:"2026-08-22",t:"The day it began",x:"A date I'll never need a calendar to remember. Everything lovely started here."},
+    {d:"",t:"Our first call",x:"The first time your voice crossed the distance and the night felt a little shorter."},
+    {d:"",t:"Our first song",x:"Somewhere in the music, we found a language for the things we couldn't say yet."},
+    {d:"",t:"The day I knew",x:"No thunder, no fanfare. Just a quiet certainty that you were home."}
+  ],
+  adventures:["Watch a sunrise together","Cook a meal side by side","Dance in the kitchen","See the sea together","Take our first photo together","Fall asleep on the same sofa","Stargaze somewhere very dark","Travel somewhere neither of us has been"]
+};
+/* ============ END EDIT ============ */
+</script>
+
+<section>
+  <h1>Closer</h1>
+  <p class="lead">For every mile between us.</p>
+</section>
+
+<section id="meetSec" hidden>
+  <h2>Until I see you</h2>
+  <p class="lead" id="meetLead"></p>
+  <div class="glass">
+    <div class="cd" id="cdBox"><div><b id="c1">0</b>days</div><div><b id="c2">0</b>hours</div><div><b id="c3">0</b>min</div><div><b id="c4">0</b>sec</div></div>
+    <p class="big" id="rmsg" hidden></p>
+    <button class="ghost" type="button" id="rehearse">Rehearse our hello ✨</button>
+  </div>
+</section>
+
+<section>
+  <h2>The same moon</h2>
+  <p class="lead">Look up at 9pm tonight. I will too.</p>
+  <canvas id="moon" width="140" height="140" aria-label="Tonight's moon"></canvas>
+  <p class="big" id="moonTxt"></p>
+</section>
+
+<section>
+  <h2>Our constellation</h2>
+  <p class="lead">Every memory is a star. Tap one.</p>
+  <div class="glass"><svg id="map" viewBox="0 0 400 300" role="img" aria-label="Star map of our memories"></svg>
+  <div id="mem"></div></div>
+</section>
+
+<section>
+  <h2>How's your heart today?</h2>
+  <p class="lead">Pick one. I'll meet you there.</p>
+  <div id="moods"></div>
+  <div class="glass" id="mood" hidden></div>
+</section>
+
+<section>
+  <h2>Voice notes</h2>
+  <p class="lead">Because hearing me is different from reading me.</p>
+  <div class="glass" id="voice"></div>
+</section>
+
+<section>
+  <h2>Cards for a call</h2>
+  <p class="lead">Draw one. Answer honestly. Then ask it back.</p>
+  <div class="glass"><div id="card" class="big">Choose a deck below.</div></div>
+  <p><button type="button" data-k="deep">Deep 🌙</button><button type="button" data-k="funny">Funny 😂</button><button type="button" data-k="flirty">Flirty 💋</button></p>
+</section>
+
+<section>
+  <h2>Our adventures</h2>
+  <p class="lead">Things we'll do together. Tick them off as we live them.</p>
+  <div class="glass"><div id="adv"></div><div class="bar"><i id="pbar"></i></div><small id="ptxt"></small></div>
+</section>
+
+<section>
+  <h2>A door only for you</h2>
+  <p class="lead" id="hint"></p>
+  <div class="glass" id="door">
+    <input type="password" id="pw" placeholder="Password" autocomplete="off">
+    <button type="button" id="open">Open</button>
+    <div id="secretBody" class="big"></div>
+  </div>
+</section>
+
+<footer>Made with love <span id="egg" aria-hidden="true">💗</span></footer>
+<div id="toast" hidden></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const el=(t,x,c)=>{const e=document.createElement(t);if(x!=null)e.textContent=x;if(c)e.className=c;return e};
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const toast=m=>{const t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,4500)};
+if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+
+/* confetti + lanterns */
+const cf=$("cf"),cc=cf.getContext("2d");let ps=[];
+function fit(){cf.width=innerWidth;cf.height=innerHeight}fit();addEventListener("resize",fit);
+function confetti(n){
+  const col=["#e8cf9f","#d98ba3","#f3e8e4","#c9748f","#b9a8c4"],was=ps.length;if(RM)n=Math.min(n,30);
+  for(let i=0;i<n;i++)ps.push({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.4,vx:(Math.random()-.5)*14,vy:-Math.random()*14-4,w:6+Math.random()*6,h:4+Math.random()*4,c:col[i%5],r:Math.random()*6,vr:Math.random()*.3-.15});
+  if(!was)paint();
+}
+function paint(){
+  cc.clearRect(0,0,cf.width,cf.height);ps=ps.filter(p=>p.y<cf.height+20);
+  ps.forEach(p=>{p.vy+=.25;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;cc.save();cc.translate(p.x,p.y);cc.rotate(p.r);cc.fillStyle=p.c;cc.fillRect(-p.w/2,-p.h/2,p.w,p.h);cc.restore()});
+  if(ps.length)requestAnimationFrame(paint);
+}
+function lanterns(){for(let i=0;i<12;i++)setTimeout(()=>{const l=el("div","🏮","lan");l.style.left=(5+Math.random()*90)+"%";l.style.animationDuration=(6+Math.random()*5)+"s";document.body.append(l);setTimeout(()=>l.remove(),12000)},i*350)}
+
+/* until I see you */
+const meet=CFG.meet?new Date(CFG.meet+"T00:00:00"):null;
+function reunion(){$("rmsg").textContent=CFG.reunion;$("rmsg").hidden=false;confetti(220);lanterns();navigator.vibrate&&navigator.vibrate([100,60,100,60,300])}
+$("rehearse").onclick=reunion;
+if(meet){
+  $("meetSec").hidden=false;
+  $("meetLead").textContent=CFG.meetPlace?"Counting every second until "+CFG.meetPlace+".":"Counting every second until I hold you.";
+  let done=false;
+  const tick=()=>{
+    const ms=meet-Date.now();
+    if(ms<=0){if(!done){done=true;$("cdBox").hidden=true;reunion()}return}
+    const s=Math.floor(ms/1000);
+    $("c1").textContent=Math.floor(s/86400);$("c2").textContent=Math.floor(s%86400/3600);$("c3").textContent=Math.floor(s%3600/60);$("c4").textContent=s%60;
+  };
+  tick();setInterval(tick,1000);
+}
+
+/* the same moon */
+(function(){
+  const syn=29.530588853,age=(((Date.now()-Date.UTC(2000,0,6,18,14))/864e5)%syn+syn)%syn,ph=age/syn;
+  const c=$("moon"),x=c.getContext("2d"),m=c.width/2,r=m-8,k=Math.cos(2*Math.PI*ph),wax=ph<.5;
+  x.fillStyle="#2a2036";x.beginPath();x.arc(m,m,r,0,6.2832);x.fill();
+  x.fillStyle="#f3e8cf";x.shadowColor="#e8cf9f";x.shadowBlur=18;x.beginPath();
+  x.arc(m,m,r,-Math.PI/2,Math.PI/2,!wax);
+  x.ellipse(m,m,Math.abs(k)*r,r,0,Math.PI/2,-Math.PI/2,wax===(k>0));
+  x.fill();
+  const f=Math.round((1-k)/2*100);
+  const name=ph<.03||ph>.97?"New moon":ph<.22?"Waxing crescent":ph<.28?"First quarter":ph<.47?"Waxing gibbous":ph<.53?"Full moon":ph<.72?"Waning gibbous":ph<.78?"Last quarter":"Waning crescent";
+  $("moonTxt").textContent=`${name}, ${f}% lit. Same moon, two windows.`;
+})();
+
+/* constellation */
+(function(){
+  const NS="http://www.w3.org/2000/svg",svg=$("map"),M=CFG.memories,mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+  for(let i=0;i<40;i++)svg.append(mk("circle",{cx:(i*97%400),cy:(i*61%300),r:.9,fill:"#fff",opacity:.35}));
+  const P=M.map((_,i)=>{const a=i*2.4,r=Math.min(40+i*22,125);return[200+r*Math.cos(a),150+r*Math.sin(a)]});
+  if(P.length>1)svg.append(mk("polyline",{points:P.map(p=>p.join(",")).join(" "),fill:"none",stroke:"#e8cf9f","stroke-opacity":.4,"stroke-width":1.2}));
+  const box=$("mem");
+  const show=(i,c)=>{svg.querySelectorAll(".s").forEach(s=>s.classList.remove("sel"));c.classList.add("sel");box.textContent="";box.append(el("h3",M[i].t),el("small",M[i].d?new Date(M[i].d+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"}):""),el("p",M[i].x))};
+  P.forEach((p,i)=>{
+    const c=mk("circle",{cx:p[0],cy:p[1],r:i===P.length-1?7:5,class:"s"+(i===P.length-1?" new":""),tabindex:0,role:"button","aria-label":M[i].t});
+    c.addEventListener("click",()=>show(i,c));c.addEventListener("keydown",e=>{if(e.key==="Enter")show(i,c)});svg.append(c);
+  });
+  box.textContent="Tap a star to open a memory.";
+})();
+
+/* mood check-in */
+const SONGS=[["Ain't No Sunshine","music/aint-no-sunshine.mp3"],["Just the Two of Us","music/just-the-two-of-us.mp3"],["The Sweetest Taboo","music/the-sweetest-taboo.mp3"]];
+const MOODS=[
+ {e:"😔",l:"Heavy",m:"Put it down for a moment. You don't have to carry all of it tonight. Breathe with me, and I'll be right here.",b:1,s:1},
+ {e:"😰",l:"Anxious",m:"Your thoughts are loud, but they are not facts. Slow breaths, my love. You are safe, and I've got you.",b:1,s:1},
+ {e:"😴",l:"Tired",m:"Rest isn't giving up. It's how heroes heal. Let the day end. I'm proud of you, and I'll hold the morning for you.",s:2},
+ {e:"🥺",l:"Missing you",m:"I miss you too, in all the quiet places. Close your eyes: I'm exactly one thought away.",s:0},
+ {e:"🥰",l:"Happy",m:"There you are, shining! Hold on to this feeling. I want every bit of it told to me tonight.",s:1},
+ {e:"😘",l:"Feeling loved",m:"Careful, you'll make me blush through the screen. Come closer, my Paladin.",s:2}
+];
+let bt;
+(function(){
+  const row=$("moods"),box=$("mood");
+  MOODS.forEach(o=>{
+    const b=el("button",o.e+" "+o.l);b.type="button";
+    b.onclick=()=>{
+      row.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");
+      clearInterval(bt);box.hidden=false;box.textContent="";box.append(el("p",o.m,"big"));
+      if(o.b){
+        const lab=el("span","Breathe in"),ring=el("div",null,"breath");ring.append(lab);box.append(ring);
+        const t0=Date.now();bt=setInterval(()=>{const t=((Date.now()-t0)/1000)%12;lab.textContent=t<4?"Breathe in":t<6?"Hold":"Breathe out";if(Date.now()-t0>72000)clearInterval(bt)},250);
+      }
+      const s=SONGS[o.s],a=el("audio");a.controls=true;a.preload="none";a.src=s[1];
+      const p=el("button","▶ Play “"+s[0]+"”");p.type="button";p.onclick=()=>a.play().catch(()=>{});
+      box.append(p,a);
+    };
+    row.append(b);
+  });
+})();
+
+/* voice notes */
+CFG.voice.forEach(v=>{
+  const r=el("div",null,"vn"),a=el("audio");a.controls=true;a.preload="none";a.src=v.f;
+  const n=el("small","");a.addEventListener("error",()=>n.textContent="Not recorded yet. Coming soon 🤍");
+  const w=el("div");w.append(a,n);r.append(el("span",v.l),w);$("voice").append(r);
+});
+
+/* question cards */
+const QS={
+ deep:["What's a small moment from this week you'd love to relive?","When do you feel most like yourself?","What's something you quietly worry about that you'd like me to know?","What does home feel like to you?","What's a dream you've never said out loud?","What did you most need to hear as a child, that I can say to you now?"],
+ funny:["What's the strangest thing you believed as a kid?","If we were a sitcom duo, what's the show called?","Describe me as a food.","What's your most embarrassing guilty-pleasure song?","What would your superhero power be, and your silly weakness?","What's the worst advice you've ever happily followed?"],
+ flirty:["What's the first thing you noticed about me?","What's one thing I do that you secretly love?","If I were next to you right now, what would we be doing?","Which of my messages did you read twice?","Plan our perfect first date, with no budget.","Tell me something you'd whisper if I were close."]
+};
+const bag={};
+document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{
+  const k=b.dataset.k;if(!bag[k]||!bag[k].length)bag[k]=[...QS[k]].sort(()=>Math.random()-.5);
+  $("card").textContent=bag[k].pop();
+});
+
+/* adventures (ticks are saved on this device) */
+let done=[];try{done=JSON.parse(localStorage.getItem("paladin-adv")||"[]")}catch(e){}
+function prog(cel){
+  const n=CFG.adventures.length,d=done.length,p=Math.round(d/n*100);
+  $("pbar").style.width=p+"%";$("ptxt").textContent=`${d} of ${n} adventures lived`;
+  if(cel&&d===n){confetti(200);lanterns();toast("Every adventure lived. What a love story. 💗")}
+}
+CFG.adventures.forEach((t,i)=>{
+  const l=el("label",null,"chk"),c=el("input");c.type="checkbox";c.checked=done.includes(i);
+  c.onchange=()=>{done=c.checked?[...done,i]:done.filter(x=>x!==i);try{localStorage.setItem("paladin-adv",JSON.stringify(done))}catch(e){}prog(true)};
+  l.append(c,el("span",t));$("adv").append(l);
+});
+prog(false);
+
+/* secret door + easter egg */
+$("hint").textContent="Hint: "+CFG.secretHint;
+$("open").onclick=()=>{
+  if($("pw").value.trim().toLowerCase()===CFG.secretPass.toLowerCase()){
+    const b=$("secretBody");b.textContent="";CFG.secret.forEach(t=>b.append(el("p",t)));$("pw").hidden=true;$("open").hidden=true;$("hint").hidden=true;confetti(90);
+  }else{$("door").classList.remove("shake");void $("door").offsetWidth;$("door").classList.add("shake")}
+};
+let taps=0,tt;
+$("egg").onclick=()=>{taps++;clearTimeout(tt);tt=setTimeout(()=>taps=0,3000);if(taps>=7){taps=0;confetti(160);toast("You found my secret: I think about you far more than I say. 💗")}};
+</script>
+</body>
+</html>

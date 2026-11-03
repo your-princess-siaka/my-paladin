@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#7a0f25">
 <link rel="icon" type="image/png" href="images/icon.png">
 <link rel="apple-touch-icon" href="images/icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <!-- Link preview (WhatsApp, iMessage, etc.) -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="My Paladin">
@@ -301,6 +302,7 @@
 
 <section style="text-align:center;padding-top:0">
   <a href="dreams.html" style="display:inline-block;background:#7a0f25;color:#fff;text-decoration:none;font-weight:600;border-radius:999px;padding:14px 32px;box-shadow:0 8px 20px rgba(122,15,37,.25)">✨ Step into our Dream Realm</a>
+  <a href="closer.html" style="display:inline-block;background:#fff;color:#7a0f25;text-decoration:none;font-weight:600;border-radius:999px;padding:14px 32px;margin-left:8px;box-shadow:0 8px 20px rgba(122,15,37,.15)">💗 Closer, for every mile</a>
 </section>
 
 <footer id="footer"></footer>
@@ -405,6 +407,7 @@
     }, { threshold: 0.12 });
     targets.forEach(t => { t.classList.add("reveal"); io.observe(t); });
   }
+  if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
 </body>
 </html>
