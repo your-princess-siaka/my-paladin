@@ -91,8 +91,11 @@ const US={
   photos:[   // add a photo: put the file in the images folder, then add one line here
     {src:"images/moment3.jpeg",note:"Rooted like this old tree: quiet, strong, and impossible to move. I love that about you."},
     {src:"images/moment2.jpeg",note:"Eyes closed, shoulders soft. The calmest storm I know."},
+    {src:"images/smile.jpeg",note:"There it is. That smile is my favourite thing on every screen."},
+    {src:"images/lilbro-art.jpeg",note:"A little gift from your little brother: even Tom and Jerry know a heart is worth holding on to."},
     {src:"images/him.jpeg",note:"Steady hands, steady heart. Whatever room you stand in, you make it brighter."},
-    {src:"images/moment1.jpeg",note:"And here is the one who is always thinking of you. Look at the smile you cause."}
+    {src:"images/moment1.jpeg",note:"And here is the one who is always thinking of you. Look at the smile you cause."},
+    {src:"images/together.jpeg",note:"Side by side, finally in the same frame. My favourite view in the whole world."}
   ],
   finale:"Every memory you uncovered was a star, and there are so many more still waiting. Wherever you are tonight, we are under the same sky. Yours, always."
 };
@@ -122,10 +125,10 @@ if(!RM)setInterval(shoot,7000);
 })(0);
 
 /* scratch polaroids */
-let done=[];try{done=JSON.parse(localStorage.getItem("paladin-scratch")||"[]")}catch(e){}
+let done=[],PH=[];try{done=JSON.parse(localStorage.getItem("paladin-scratch")||"[]").filter(x=>typeof x==="string")}catch(e){}
 let finished=false;
 function upd(celebrate){
-  const total=US.photos.length,d=done.length;
+  const total=PH.length,d=PH.filter(p=>done.includes(p.src)).length;
   $("starRow").textContent="★".repeat(d)+"☆".repeat(total-d);
   $("ptxt").textContent=d===total?"Every star is lit.":d+" of "+total+" memories uncovered";
   if(d===total){
@@ -134,7 +137,8 @@ function upd(celebrate){
     finished=true;
   }
 }
-US.photos.forEach((p,i)=>{
+function build(list){
+PH=list;PH.forEach((p,i)=>{
   const pol=el("div",null,"pol");pol.style.setProperty("--r",["-2deg","1.6deg","-1.2deg","2deg"][i%4]);
   const box=el("div",null,"sc"),img=document.createElement("img");img.src=p.src;img.alt="";
   if(p.pos)img.style.objectPosition=p.pos;
@@ -145,11 +149,11 @@ US.photos.forEach((p,i)=>{
   function open(){
     if(box.classList.contains("open"))return;
     box.classList.add("open");cap.classList.add("show");btn.hidden=true;
-    if(!done.includes(i)){done.push(i);try{localStorage.setItem("paladin-scratch",JSON.stringify(done))}catch(e){}}
+    if(!done.includes(p.src)){done.push(p.src);try{localStorage.setItem("paladin-scratch",JSON.stringify(done))}catch(e){}}
     shoot();navigator.vibrate&&navigator.vibrate(40);upd(true);
   }
   btn.onclick=open;
-  if(done.includes(i)){box.classList.add("open");cap.classList.add("show");btn.hidden=true;return}
+  if(done.includes(p.src)){box.classList.add("open");cap.classList.add("show");btn.hidden=true;return}
   const r=box.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);
   c.width=r.width*d;c.height=r.height*d;const x=c.getContext("2d");
   const g=x.createLinearGradient(0,0,c.width,c.height);g.addColorStop(0,"#2b1233");g.addColorStop(1,"#5c2447");x.fillStyle=g;x.fillRect(0,0,c.width,c.height);
@@ -168,8 +172,8 @@ US.photos.forEach((p,i)=>{
     for(let q=3;q<px.length;q+=64){m++;if(px[q]<100)t++}
     if(t/m>.5)open();
   }));
-});
-upd(false);
+});upd(false)}
+Promise.all(US.photos.map(p=>new Promise(r=>{const m=new Image();m.onload=()=>r(p);m.onerror=()=>r(null);m.src=p.src}))).then(l=>build(l.filter(Boolean)));
 $("reset").onclick=()=>{try{localStorage.removeItem("paladin-scratch")}catch(e){}location.reload()};
 
 /* tonight's dream: same seed for both of us */
