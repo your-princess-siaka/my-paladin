@@ -26,7 +26,7 @@ button.ghost{background:transparent;color:var(--ink);border:1px solid var(--soft
 .top{position:fixed;top:12px;z-index:5;font-size:.9rem;padding:8px 16px;background:rgba(13,7,22,.75);color:var(--ink);border:1px solid rgba(232,207,159,.3)}
 #snd{right:12px}.back{left:12px}
 /* hero */
-.pair{display:flex;align-items:center;justify-content:center;gap:0;margin:26px auto 10px;max-width:340px}
+.pair{display:flex;align-items:center;justify-content:center;margin:34px auto 22px;max-width:260px}
 .orb{width:112px;height:112px;border-radius:50%;object-fit:cover;border:3px solid #f3e3d0;box-shadow:0 0 30px rgba(217,139,163,.45);background:#3a1631;flex:none}
 .thread{flex:1;height:2px;margin:0 -6px;background:repeating-linear-gradient(90deg,var(--gold) 0 6px,transparent 6px 12px);position:relative;opacity:.8}
 .thread::after{content:"♥";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#e0607e;font-size:1.3rem;text-shadow:0 0 10px #e0607e;animation:hb 1.6s infinite}
@@ -46,6 +46,26 @@ button.ghost{background:transparent;color:var(--ink);border:1px solid var(--soft
 #finale{margin-top:16px}
 #finale[hidden]{display:none}
 #dream small{display:block;font:600 .8rem Nunito,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:8px;font-style:normal}
+.env{position:relative;width:min(300px,80vw);aspect-ratio:3/2;margin:0 auto;background:#ead7c8;border-radius:8px;box-shadow:0 14px 34px rgba(0,0,0,.55);transition:opacity .8s,transform .8s}
+.env::before{content:"";position:absolute;inset:0;background:#dcc3b1;clip-path:polygon(0 0,100% 0,50% 62%);border-radius:8px 8px 0 0}
+.env.fade{opacity:0;transform:scale(.9)}
+.wax{position:absolute;left:50%;top:60%;width:66px;height:66px;margin:-33px 0 0 -33px;border-radius:50%;border:0;padding:0;background:radial-gradient(circle at 35% 30%,#e0607e,#8f1d3a 70%);color:#ffd9e0;font-size:1.8rem;line-height:1;box-shadow:0 4px 10px rgba(0,0,0,.5),inset 0 0 0 4px rgba(0,0,0,.12);animation:pulse 1.6s infinite}
+.wax.locked{filter:grayscale(.75) brightness(.7);animation:none}
+.wax.shake{animation:sh .4s}
+@keyframes pulse{50%{transform:scale(1.12)}}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.paper{position:relative;max-width:420px;margin:0 auto;background:linear-gradient(#f8efe6,#efe0d2);color:#4a1530;border-radius:6px;padding:30px 24px 22px;box-shadow:0 18px 40px rgba(0,0,0,.55);text-align:left;transform:rotate(-1deg)}
+.paper::before{content:"";position:absolute;top:-10px;left:50%;width:90px;height:24px;margin-left:-45px;background:rgba(232,207,159,.7);transform:rotate(-3deg)}
+#letter.in .paper{animation:slide 1.2s ease-out}
+@keyframes slide{from{opacity:0;transform:translateY(30px) rotate(-3deg)}}
+.lpw{width:64%;margin:0 auto 18px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.35))}
+.lp{width:100%;overflow:hidden}
+.lp img{width:100%;height:100%;object-fit:cover;display:block}
+.lp.heart{clip-path:url(#heartClip)}
+.lp:not(.heart){border:8px solid #fff;transform:rotate(2deg)}
+.hand{font:italic 1.08rem/1.8 "Playfair Display",Georgia,serif;white-space:pre-line;margin:0}
+.sig{text-align:right;font:italic 1.25rem "Playfair Display",Georgia,serif;margin:14px 0 0;opacity:0;transition:opacity 1.4s}
+.sig.show{opacity:1}
 footer{position:relative;z-index:1;text-align:center;color:var(--soft);padding:20px 20px 60px}
 @media (prefers-reduced-motion:reduce){.thread::after{animation:none}}
 </style>
@@ -59,20 +79,28 @@ footer{position:relative;z-index:1;text-align:center;color:var(--soft);padding:2
 <section>
   <h1>Under Our Stars</h1>
   <p class="lead">Scratch the sky to uncover our memories. ✨</p>
-  <div class="pair">
-    <img class="orb" src="images/me.jpg" alt="" style="object-position:50% 35%" onerror="this.style.visibility='hidden'">
-    <span class="thread"></span>
-    <img class="orb" src="images/moment4.jpeg" alt="" style="object-position:50% 25%" onerror="this.style.visibility='hidden'">
-  </div>
+  <div class="pair"><span class="thread"></span></div>
   <p id="days"></p>
 </section>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><clipPath id="heartClip" clipPathUnits="objectBoundingBox"><path d="M0.5,0.93 C0.08,0.62 0,0.42 0,0.27 C0,0.1 0.13,0 0.27,0 C0.38,0 0.46,0.06 0.5,0.14 C0.54,0.06 0.62,0 0.73,0 C0.87,0 1,0.1 1,0.27 C1,0.42 0.92,0.62 0.5,0.93 Z"/></clipPath></svg>
 <div id="cards"></div>
 
 <section>
   <div id="starRow"></div>
   <p class="lead" id="ptxt"></p>
-  <div class="glass" id="finale" hidden><p class="big" id="fmsg"></p></div>
+</section>
+
+<section id="letterSec">
+  <div class="env" id="env"><button class="wax locked" id="wax" type="button" aria-label="Wax seal">♥</button></div>
+  <p class="lead" id="sealTxt" style="margin-top:22px">Light every star to unlock my letter.</p>
+  <div id="letter" hidden>
+    <div class="paper">
+      <div class="lpw" hidden><div class="lp"><img id="lph" alt=""></div></div>
+      <p class="hand" id="ltxt"></p>
+      <p class="sig" id="lsig"></p>
+    </div>
+  </div>
 </section>
 
 <section>
@@ -89,15 +117,18 @@ footer{position:relative;z-index:1;text-align:center;color:var(--soft);padding:2
 const US={
   since:"2026-08-22",
   photos:[   // add a photo: put the file in the images folder, then add one line here
-    {src:"images/moment3.jpeg",note:"Rooted like this old tree: quiet, strong, and impossible to move. I love that about you."},
-    {src:"images/moment2.jpeg",note:"Eyes closed, shoulders soft. The calmest storm I know."},
-    {src:"images/smile.jpeg",note:"There it is. That smile is my favourite thing on every screen."},
+    // pos = which part of the photo to keep in view ("50% 10%" = near the top, where faces usually are)
+    {src:"images/smile.jpeg",pos:"50% 8%",note:"There it is. That smile is my favourite thing on every screen."},
     {src:"images/lilbro-art.jpeg",note:"A little gift from your little brother: even Tom and Jerry know a heart is worth holding on to."},
-    {src:"images/him.jpeg",note:"Steady hands, steady heart. Whatever room you stand in, you make it brighter."},
-    {src:"images/moment1.jpeg",note:"And here is the one who is always thinking of you. Look at the smile you cause."},
-    {src:"images/together.jpeg",note:"Side by side, finally in the same frame. My favourite view in the whole world."}
+    {src:"images/together.jpeg",pos:"50% 5%",note:"Side by side, finally in the same frame. My favourite view in the whole world."}
   ],
-  finale:"Every memory you uncovered was a star, and there are so many more still waiting. Wherever you are tonight, we are under the same sky. Yours, always."
+  letter:{
+    photo:"images/my-smile.jpg",   // your smiling photo: save it in the images folder with this name
+    pos:"50% 2%",                   // which part of the photo stays in view (faces are usually near the top)
+    heart:true,                     // true = photo is cut in the shape of a heart, false = plain frame
+    text:"My love,\n\nIf you are reading this, you have lit every star, and I hope you smiled the way you do when you think no one is watching.\n\nThat is my smile, up there. I wore it for you, and I keep it ready for the day I can finally give it to you in person.\n\nWherever you are tonight, someone is thinking of you, wishing on the same moon, and saving you the very best part of her heart.\n\nCome close, my love. I am right here.",
+    sign:"Yours, always ♥"
+  }
 };
 /* ============ END EDIT ============ */
 
@@ -128,11 +159,12 @@ if(!RM)setInterval(shoot,7000);
 let done=[],PH=[];try{done=JSON.parse(localStorage.getItem("paladin-scratch")||"[]").filter(x=>typeof x==="string")}catch(e){}
 let finished=false;
 function upd(celebrate){
+  if(!PH.length){$("ptxt").textContent="Add photos to the images folder to begin.";return}
   const total=PH.length,d=PH.filter(p=>done.includes(p.src)).length;
   $("starRow").textContent="★".repeat(d)+"☆".repeat(total-d);
   $("ptxt").textContent=d===total?"Every star is lit.":d+" of "+total+" memories uncovered";
   if(d===total){
-    $("fmsg").textContent=US.finale;$("finale").hidden=false;
+    $("wax").classList.remove("locked");$("sealTxt").textContent="Every star is lit. Tap the seal ♥";
     if(celebrate&&!finished){for(let i=0;i<8;i++)setTimeout(shoot,i*200);navigator.vibrate&&navigator.vibrate([60,60,60,60,200])}
     finished=true;
   }
@@ -141,7 +173,7 @@ function build(list){
 PH=list;PH.forEach((p,i)=>{
   const pol=el("div",null,"pol");pol.style.setProperty("--r",["-2deg","1.6deg","-1.2deg","2deg"][i%4]);
   const box=el("div",null,"sc"),img=document.createElement("img");img.src=p.src;img.alt="";
-  if(p.pos)img.style.objectPosition=p.pos;
+  img.style.objectPosition=p.pos||"50% 15%";box.style.aspectRatio=Math.min(1.1,Math.max(.66,p.w/p.h));
   const c=document.createElement("canvas"),cap=el("div",p.note,"cap");
   box.append(img,c);pol.append(box,cap);
   const btn=el("button","or just reveal it","ghost hint");btn.type="button";btn.style.fontSize=".8rem";
@@ -172,9 +204,41 @@ PH=list;PH.forEach((p,i)=>{
     for(let q=3;q<px.length;q+=64){m++;if(px[q]<100)t++}
     if(t/m>.5)open();
   }));
-});upd(false)}
-Promise.all(US.photos.map(p=>new Promise(r=>{const m=new Image();m.onload=()=>r(p);m.onerror=()=>r(null);m.src=p.src}))).then(l=>build(l.filter(Boolean)));
-$("reset").onclick=()=>{try{localStorage.removeItem("paladin-scratch")}catch(e){}location.reload()};
+});upd(false);if(!$("wax").classList.contains("locked")&&had())openLetter(true)}
+Promise.all(US.photos.map(p=>new Promise(r=>{const m=new Image();m.onload=()=>r({...p,w:m.naturalWidth,h:m.naturalHeight});m.onerror=()=>r(null);m.src=p.src}))).then(l=>build(l.filter(Boolean)));
+$("reset").onclick=()=>{try{localStorage.removeItem("paladin-scratch");localStorage.removeItem("paladin-letter")}catch(e){}location.reload()};
+
+/* the sealed love letter */
+const L=US.letter;let opened=false;
+const had=()=>{try{return localStorage.getItem("paladin-letter")}catch(e){return null}};
+if(L.photo){
+  const m=new Image(),lp=$("lph");
+  m.onload=()=>{
+    lp.src=L.photo;lp.style.objectPosition=L.pos||"50% 20%";
+    const box=lp.parentNode;
+    if(L.heart){box.classList.add("heart");box.style.aspectRatio="1.05"}else box.style.aspectRatio=Math.min(1.1,Math.max(.66,m.naturalWidth/m.naturalHeight));
+    box.parentNode.hidden=false;
+  };
+  m.src=L.photo;
+}
+function openLetter(instant){
+  if(opened)return;opened=true;
+  const env=$("env"),out=$("ltxt"),sig=$("lsig");
+  $("sealTxt").hidden=true;
+  if(instant||RM)env.hidden=true;else{env.classList.add("fade");setTimeout(()=>env.hidden=true,800)}
+  $("letter").hidden=false;$("letter").classList.add("in");
+  sig.textContent=L.sign;
+  try{localStorage.setItem("paladin-letter","1")}catch(e){}
+  out.textContent=L.text;out.style.minHeight=out.offsetHeight+"px";out.textContent="";
+  if(instant||RM){out.textContent=L.text;sig.classList.add("show");return}
+  shoot();navigator.vibrate&&navigator.vibrate([50,40,50]);
+  let i=0;const iv=setInterval(()=>{out.textContent=L.text.slice(0,++i);if(i>=L.text.length){clearInterval(iv);sig.classList.add("show")}},24);
+}
+$("wax").onclick=()=>{
+  const w=$("wax");
+  if(w.classList.contains("locked")){$("sealTxt").textContent="Light every star first ✨";w.classList.remove("shake");void w.offsetWidth;w.classList.add("shake");return}
+  openLetter(false);
+};
 
 /* tonight's dream: same seed for both of us */
 function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
